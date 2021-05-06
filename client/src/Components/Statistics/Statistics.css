@@ -1,0 +1,51 @@
+.stats_container {
+  width: 100%;
+  min-height: calc(100vh - 100px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 15px;
+  grid-template-areas:
+    "bar bar"
+    "doughnut flow";
+}
+
+.chart_container {
+  border-radius: 30px;
+  background: #fff;
+  -webkit-box-shadow: 4px 2px 15px -5px rgba(0, 0, 0, 0.49);
+  box-shadow: 4px 2px 15px -5px rgba(0, 0, 0, 0.49);
+  padding: 2em;
+  display: grid;
+  justify-items: center;
+  min-height: 400px;
+  grid-template-columns: 1fr;
+  position: relative;
+}
+
+.chart {
+  width: 100%;
+  height: 100%;
+}
+
+.bar_container {
+  grid-area: bar;
+}
+
+.doughnut_container {
+  grid-area: doughnut;
+}
+.flow_container {
+  grid-area: flow;
+}
+
+@media only screen and (max-width: 1400px) {
+  .stats_container {
+    grid-template-columns: 1fr;
+    grid-gap: 15px;
+    grid-template-areas:
+      "bar"
+      "doughnut"
+      "flow";
+  }
+}
