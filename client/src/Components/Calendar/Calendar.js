@@ -38,8 +38,14 @@ export default function Calendar({ value, onChange, change }) {
       <div className="calendar_container_calendar">
         <div className="calendar">
           <Header value={value} onChange={onChange} />
-
           <div className="body">
+            <div className="day-names">
+              {["sun", "mon", "tue", "wed", "thu", "fri", "sat"].map((d, i) => (
+                <div className="week" key={i}>
+                  {d}
+                </div>
+              ))}
+            </div>
             <div className="test_weeks_container">
               {calendar.map((week, wi) => (
                 <div key={wi} className="day_container">
