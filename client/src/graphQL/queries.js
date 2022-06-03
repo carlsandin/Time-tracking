@@ -31,8 +31,12 @@ export const TIMES = `
 
 export const ALL_TIMES = `query($creator: String!) {
   allTimes(filter: {creator: $creator}) {
-    date
+    title
+    _id
     project
+    date
+    startTime
+    endTime
     h
     m
     s

@@ -43,6 +43,26 @@
   transition: margin-left 0.3s ease-in-out;
 }
 
+.search_container {
+  position: relative;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search_times {
+  border: none;
+  width: 100%;
+  outline: none;
+  font-size: 12pt;
+}
+
+.search_icon {
+  position: absolute;
+  right: 30px;
+}
+
 .timecard_title {
   text-align: left;
 }

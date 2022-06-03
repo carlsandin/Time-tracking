@@ -3,7 +3,7 @@ import "./Timecard.css";
 import { FaEdit } from "react-icons/fa";
 import TimeModule from "./TimeModule";
 // ADD DELETE TIME
-function Timecard({ time }) {
+function Timecard({ time, twoDates }) {
   const [edit, setEdit] = useState(false);
 
   const showEdit = () => {
@@ -29,6 +29,7 @@ function Timecard({ time }) {
         <div></div>
         <p>{time.endTime}</p>
       </div>
+      {twoDates && <div className="timecard_show_date">{time.date}</div>}
     </div>
   );
 }

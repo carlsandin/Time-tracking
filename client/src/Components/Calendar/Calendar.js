@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
 import moment from "moment";
 import Header from "./Header";
+import { DateRangePicker } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import CalendarTimes from "./CalendarTimes";
 import "./Calendar.css";
 import { buildCalendar, disabledDates } from "./functions";
 import { UserContext } from "../../context/UserContext";
 
-export default function Calendar({ value, onChange, change }) {
-  const [calendar, setCalendar] = useState([]);
+export default function Calendar({ value, change }) {
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const currUser = useContext(UserContext);
   const joinedAt = currUser.createdAt;
 
-  useEffect(() => {
-    setCalendar(buildCalendar(value));
-  }, [value]);
+  console.log(startDate);
 
   function isSelected(day) {
     // Check for selected date
@@ -32,58 +34,34 @@ export default function Calendar({ value, onChange, change }) {
     if (isToday(day)) return "today";
     return "";
   }
+  const selectionRange = {
+    startDate: startDate,
+    endDate: endDate,
+    key: "selection",
+  };
+
+  function handleSelect(ranges) {
+    setStartDate(ranges.selection.startDate);
+    setEndDate(ranges.selection.endDate);
+    console.log(startDate);
+    console.log(endDate);
+  }
 
   return (
     <div className="calendar_container">
       <div className="calendar_container_calendar">
-        <div className="calendar">
-          <Header value={value} onChange={onChange} />
-          <div className="body">
-            <div className="day-names">
-              {["sun", "mon", "tue", "wed", "thu", "fri", "sat"].map((d, i) => (
-                <div className="week" key={i}>
-                  {d}
-                </div>
-              ))}
-            </div>
-            <div className="test_weeks_container">
-              {calendar.map((week, wi) => (
-                <div key={wi} className="day_container">
-                  {week.map((day, di) => (
-                    <div
-                      key={di}
-                      className="day"
-                      onClick={() => {
-                        if (
-                          day < moment(joinedAt).startOf("day") ||
-                          day > moment(new Date()).startOf("day")
-                        )
-                          return;
-                        onChange(day);
-                      }}
-                    >
-                      <div className={dayStyles(day)}>
-                        {day.format("D").toString()}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-      <CalendarTimes value={value} joinedAt={joinedAt} change={change} />
+        <DateRangePicker
+          ranges={[selectionRange]}
+          onChange={handleSelect}
+          dateDisplayFormat={"yyyy-MM-dd"}
+        />{" "}
+      </div>{" "}
+      <CalendarTimes
+        value={moment(startDate).format("YYYY-MM-DD")}
+        endDate={moment(endDate).format("YYYY-MM-DD")}
+        joinedAt={joinedAt}
+        change={change}
+      />{" "}
     </div>
   );
 }
-
-/*
- <div className="week">{day.isoWeekday()}</div>
-<div className="day-names">
-              {["sun", "mon", "tue", "wed", "thu", "fri", "sat"].map((d, i) => (
-                <div className="week" key={i}>
-                  {d}
-                </div>
-              ))}
-            </div> */
